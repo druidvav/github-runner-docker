@@ -3,6 +3,7 @@ services:
     build:
       context: .
       args:
+        DEBIAN_VERSION: trixie
         RUNNER_VERSION: latest
         PHP_VERSION: "8.1"
     container_name: github-self-hosted-runner
