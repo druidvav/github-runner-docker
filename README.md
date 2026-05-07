@@ -18,6 +18,15 @@ args:
 environment:
   PHP_VERSION: "8.1"
   RUNNER_WORKDIR: /home/runner/_work
+volumes:
+  - ./data/actions-runner:/home/runner/actions-runner
+  - ./data/work:/home/runner/_work
+```
+
+Create local data directories:
+
+```bash
+mkdir -p data/actions-runner data/work
 ```
 
 Build the image:
@@ -62,7 +71,7 @@ For an organization runner, use the organization URL:
 https://github.com/owner
 ```
 
-After the first successful registration, runner configuration is kept in the `runner-config` Docker volume.
+After the first successful registration, runner configuration is kept in `./data/actions-runner`, and workflow files are kept in `./data/work`.
 
 ## Normal Start
 
@@ -93,7 +102,7 @@ docker compose down
 Remove runner data and force a fresh registration next time:
 
 ```bash
-docker compose down -v
+rm -rf data/actions-runner data/work
 ```
 
 ## Runner Options
