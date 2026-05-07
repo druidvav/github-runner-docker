@@ -13,9 +13,5 @@ services:
       PHP_VERSION: "8.1"
       RUNNER_WORKDIR: /home/runner/_work
     volumes:
-      - runner-config:/home/runner/actions-runner
-      - runner-work:/home/runner/_work
-
-volumes:
-  runner-config:
-  runner-work:
+      - ./data/actions-runner:/home/runner/actions-runner
+      - ./data/work:/home/runner/_work
