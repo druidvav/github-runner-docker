@@ -1,4 +1,5 @@
-FROM debian:bookworm-slim
+ARG DEBIAN_VERSION=trixie
+FROM debian:${DEBIAN_VERSION}-slim
 
 ARG RUNNER_VERSION=latest
 ARG PHP_VERSION=8.1
