@@ -20,14 +20,8 @@ environment:
   PHP_VERSION: "8.1"
   RUNNER_WORKDIR: /home/runner/_work
 volumes:
-  - ./data/actions-runner:/home/runner/actions-runner
-  - ./data/work:/home/runner/_work
-```
-
-Create local data directories:
-
-```bash
-mkdir -p data/actions-runner data/work
+  - runner-config:/home/runner/actions-runner
+  - runner-work:/home/runner/_work
 ```
 
 Build the image:
@@ -37,15 +31,6 @@ docker compose build
 ```
 
 `network_mode: host` avoids Docker creating a separate network namespace. This is useful on restricted hosts where container startup fails while Docker tries to set `net.ipv4.ip_unprivileged_port_start`.
-
-If startup fails with `./config.sh: No such file or directory`, rebuild the image and clear the incomplete local runner directory:
-
-```bash
-docker compose down
-rm -rf data/actions-runner
-mkdir -p data/actions-runner data/work
-docker compose build --no-cache
-```
 
 Create a registration token in GitHub:
 
@@ -83,7 +68,7 @@ For an organization runner, use the organization URL:
 https://github.com/owner
 ```
 
-After the first successful registration, runner configuration is kept in `./data/actions-runner`, and workflow files are kept in `./data/work`.
+After the first successful registration, runner configuration is kept in the `runner-config` Docker volume, and workflow files are kept in the `runner-work` Docker volume.
 
 ## Normal Start
 
@@ -114,7 +99,7 @@ docker compose down
 Remove runner data and force a fresh registration next time:
 
 ```bash
-rm -rf data/actions-runner data/work
+docker compose down -v
 ```
 
 ## Runner Options
