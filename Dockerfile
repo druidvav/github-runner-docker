@@ -53,8 +53,13 @@ RUN set -eux; \
     phpenmod -v "${PHP_VERSION}" imagick memcached; \
     php -r '$required = ["json", "curl", "ftp", "soap", "openssl", "fileinfo", "imagick", "mbstring", "dom", "zip", "simplexml", "memcached", "libxml"]; foreach ($required as $extension) { if (!extension_loaded($extension)) { fwrite(STDERR, "Missing PHP extension: {$extension}\n"); exit(1); } }'; \
     curl -fsSL https://getcomposer.org/installer -o /tmp/composer-setup.php; \
-    php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer; \
+    composer_version_args=(); \
+    if [[ "${PHP_VERSION}" == "7.4" ]]; then \
+        composer_version_args=(--version=2.2); \
+    fi; \
+    php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer "${composer_version_args[@]}"; \
     rm -f /tmp/composer-setup.php; \
+    composer --version; \
     corepack enable; \
     npm install -g grunt-cli; \
     corepack --version; \
