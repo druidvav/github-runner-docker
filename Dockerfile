@@ -54,7 +54,10 @@ RUN set -eux; \
     curl -fsSL https://getcomposer.org/installer -o /tmp/composer-setup.php; \
     php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer; \
     rm -f /tmp/composer-setup.php; \
-    corepack enable || true; \
+    corepack enable; \
+    npm install -g grunt-cli; \
+    corepack --version; \
+    grunt --version; \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/*
 
