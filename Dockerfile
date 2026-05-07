@@ -40,6 +40,7 @@ RUN set -eux; \
         "php${PHP_VERSION}-common" \
         "php${PHP_VERSION}-curl" \
         "php${PHP_VERSION}-gd" \
+        "php${PHP_VERSION}-imagick" \
         "php${PHP_VERSION}-intl" \
         "php${PHP_VERSION}-mbstring" \
         "php${PHP_VERSION}-memcached" \
@@ -49,8 +50,8 @@ RUN set -eux; \
         "php${PHP_VERSION}-sqlite3" \
         "php${PHP_VERSION}-xml" \
         "php${PHP_VERSION}-zip"; \
-    phpenmod -v "${PHP_VERSION}" memcached; \
-    php -m | grep -qi '^memcached$'; \
+    phpenmod -v "${PHP_VERSION}" imagick memcached; \
+    php -r '$required = ["json", "curl", "ftp", "soap", "openssl", "fileinfo", "imagick", "mbstring", "dom", "zip", "simplexml", "memcached", "libxml"]; foreach ($required as $extension) { if (!extension_loaded($extension)) { fwrite(STDERR, "Missing PHP extension: {$extension}\n"); exit(1); } }'; \
     curl -fsSL https://getcomposer.org/installer -o /tmp/composer-setup.php; \
     php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer; \
     rm -f /tmp/composer-setup.php; \
