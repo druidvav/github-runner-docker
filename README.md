@@ -15,7 +15,6 @@ Edit `docker-compose.yml` if needed:
 ```yaml
 network_mode: host
 args:
-  DEBIAN_VERSION: trixie
   PHP_VERSION: "8.1"
 environment:
   PHP_VERSION: "8.1"
@@ -33,7 +32,7 @@ docker compose build
 
 `network_mode: host` avoids Docker creating a separate network namespace. This is useful on restricted hosts where container startup fails while Docker tries to set `net.ipv4.ip_unprivileged_port_start`.
 
-The default base image is `debian:trixie-slim` because current Sury PHP packages can depend on Debian 13 libraries such as `libicu76` and `libssl3t64`.
+The base image is fixed to `debian:trixie-slim` because current Sury PHP packages can depend on Debian 13 libraries such as `libicu76` and `libssl3t64`.
 
 Create a registration token in GitHub:
 
