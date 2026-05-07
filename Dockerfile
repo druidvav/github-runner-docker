@@ -83,7 +83,9 @@ RUN set -eux; \
     tar -xzf /tmp/actions-runner.tar.gz; \
     rm -f /tmp/actions-runner.tar.gz; \
     ./bin/installdependencies.sh; \
-    chown -R runner:runner /home/runner/actions-runner /home/runner/_work
+    install -d /opt/actions-runner; \
+    cp -a /home/runner/actions-runner/. /opt/actions-runner/; \
+    chown -R runner:runner /home/runner/actions-runner /home/runner/_work /opt/actions-runner
 
 COPY --chown=runner:runner scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod 0755 /usr/local/bin/entrypoint.sh
