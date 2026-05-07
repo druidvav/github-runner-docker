@@ -1,42 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-runner_home="${RUNNER_HOME:-/home/runner/actions-runner}"
-runner_seed="${RUNNER_SEED:-/opt/actions-runner}"
-
-mkdir -p "${runner_home}"
-
-if [[ ! -x "${runner_home}/config.sh" ]]; then
-    if [[ ! -w "${runner_home}" ]]; then
-        echo "${runner_home} is not writable. Create the host data directories before starting:" >&2
-        echo "  mkdir -p data/actions-runner data/work" >&2
-        exit 1
-    fi
-
-    if [[ ! -d "${runner_seed}" || ! -x "${runner_seed}/config.sh" ]]; then
-        echo "GitHub runner seed files are missing from ${runner_seed}." >&2
-        echo "Rebuild the image and clear the incomplete local runner directory:" >&2
-        echo "  docker compose down" >&2
-        echo "  rm -rf data/actions-runner" >&2
-        echo "  mkdir -p data/actions-runner data/work" >&2
-        echo "  docker compose build --no-cache" >&2
-        exit 1
-    fi
-
-    rsync -a "${runner_seed}/" "${runner_home}/"
-fi
-
-if [[ ! -x "${runner_home}/config.sh" || ! -x "${runner_home}/run.sh" ]]; then
-    echo "GitHub runner files were not initialized in ${runner_home}." >&2
-    echo "Clear the incomplete local runner directory and rebuild the image:" >&2
-    echo "  docker compose down" >&2
-    echo "  rm -rf data/actions-runner" >&2
-    echo "  mkdir -p data/actions-runner data/work" >&2
-    echo "  docker compose build --no-cache" >&2
-    exit 1
-fi
-
-cd "${runner_home}"
+cd /home/runner/actions-runner
 
 usage() {
     cat <<'USAGE'
@@ -140,12 +105,6 @@ while [[ $# -gt 0 ]]; do
 done
 
 mkdir -p "${runner_workdir}"
-
-if [[ ! -w "${runner_workdir}" ]]; then
-    echo "${runner_workdir} is not writable. Create the host data directories before starting:" >&2
-    echo "  mkdir -p data/actions-runner data/work" >&2
-    exit 1
-fi
 
 cleanup() {
     if [[ "${remove_on_exit}" == "true" && -f .runner && -n "${runner_token}" ]]; then
