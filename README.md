@@ -13,6 +13,7 @@ cp docker-compose.yml.dist docker-compose.yml
 Edit `docker-compose.yml` if needed:
 
 ```yaml
+network_mode: host
 args:
   PHP_VERSION: "8.1"
 environment:
@@ -34,6 +35,8 @@ Build the image:
 ```bash
 docker compose build
 ```
+
+`network_mode: host` avoids Docker creating a separate network namespace. This is useful on restricted hosts where container startup fails while Docker tries to set `net.ipv4.ip_unprivileged_port_start`.
 
 Create a registration token in GitHub:
 
