@@ -35,7 +35,6 @@ RUN set -eux; \
         nodejs \
         openssh-client \
         rsync \
-        "php${PHP_VERSION}" \
         "php${PHP_VERSION}-bcmath" \
         "php${PHP_VERSION}-cli" \
         "php${PHP_VERSION}-common" \
