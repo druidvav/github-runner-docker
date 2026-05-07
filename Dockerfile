@@ -50,6 +50,8 @@ RUN set -eux; \
         "php${PHP_VERSION}-sqlite3" \
         "php${PHP_VERSION}-xml" \
         "php${PHP_VERSION}-zip"; \
+    phpenmod -v "${PHP_VERSION}" memcached; \
+    php -m | grep -qi '^memcached$'; \
     curl -fsSL https://getcomposer.org/installer -o /tmp/composer-setup.php; \
     php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer; \
     rm -f /tmp/composer-setup.php; \
