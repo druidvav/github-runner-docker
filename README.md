@@ -78,6 +78,8 @@ Start the already configured runner:
 docker compose up -d
 ```
 
+The compose file uses `stop_signal: SIGINT` and `stop_grace_period: 5m` so `docker compose down` gives the GitHub runner time to close its active session cleanly.
+
 View logs:
 
 ```bash
