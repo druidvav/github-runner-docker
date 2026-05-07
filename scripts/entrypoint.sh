@@ -114,7 +114,7 @@ cleanup() {
 
 stop_runner() {
     if [[ -n "${runner_pid:-}" ]]; then
-        kill "${runner_pid}" 2>/dev/null || true
+        kill -INT "${runner_pid}" 2>/dev/null || true
         wait "${runner_pid}" 2>/dev/null || true
     fi
 }
