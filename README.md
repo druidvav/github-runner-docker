@@ -1,6 +1,7 @@
 # GitHub Self-Hosted Runner
 
 Dockerized GitHub Actions self-hosted runner with Node.js 22 from NodeSource, configurable PHP from Sury packages, OpenSSH client tools, and rsync.
+Node.js ships with Corepack enabled in this image, so Yarn versions can be pinned by each project through `packageManager` or `yarnPath`. The image also includes global `grunt-cli`.
 
 ## First Start
 
