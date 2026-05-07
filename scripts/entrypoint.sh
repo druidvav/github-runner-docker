@@ -1,7 +1,22 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-cd /home/runner/actions-runner
+runner_home="${RUNNER_HOME:-/home/runner/actions-runner}"
+runner_seed="${RUNNER_SEED:-/opt/actions-runner}"
+
+mkdir -p "${runner_home}"
+
+if [[ ! -x "${runner_home}/config.sh" ]]; then
+    if [[ ! -w "${runner_home}" ]]; then
+        echo "${runner_home} is not writable. Create the host data directories before starting:" >&2
+        echo "  mkdir -p data/actions-runner data/work" >&2
+        exit 1
+    fi
+
+    rsync -a "${runner_seed}/" "${runner_home}/"
+fi
+
+cd "${runner_home}"
 
 usage() {
     cat <<'USAGE'
@@ -103,6 +118,14 @@ while [[ $# -gt 0 ]]; do
             ;;
     esac
 done
+
+mkdir -p "${runner_workdir}"
+
+if [[ ! -w "${runner_workdir}" ]]; then
+    echo "${runner_workdir} is not writable. Create the host data directories before starting:" >&2
+    echo "  mkdir -p data/actions-runner data/work" >&2
+    exit 1
+fi
 
 cleanup() {
     if [[ "${remove_on_exit}" == "true" && -f .runner && -n "${runner_token}" ]]; then
