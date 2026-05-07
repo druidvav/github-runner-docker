@@ -4,16 +4,20 @@ Dockerized GitHub Actions self-hosted runner with Node.js 22 from NodeSource, co
 
 ## First Start
 
-Create an optional `.env` file for build settings:
+Create local compose config from the distributed template:
 
 ```bash
-cp .env.example .env
+cp docker-compose.yml.dist docker-compose.yml
 ```
 
-Default:
+Edit `docker-compose.yml` if needed:
 
-```text
-PHP_VERSION=8.1
+```yaml
+args:
+  PHP_VERSION: "8.1"
+environment:
+  PHP_VERSION: "8.1"
+  RUNNER_WORKDIR: /home/runner/_work
 ```
 
 Build the image:
@@ -115,7 +119,7 @@ Defaults:
 ```text
 labels: self-hosted,linux,node22,php8.1 when PHP_VERSION=8.1
 group: Default
-workdir: /home/runner/_work
+workdir: RUNNER_WORKDIR or /home/runner/_work
 replace: true
 ```
 
