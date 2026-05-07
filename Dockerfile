@@ -1,6 +1,7 @@
 FROM debian:bookworm-slim
 
 ARG RUNNER_VERSION=latest
+ARG PHP_VERSION=8.1
 ARG DEBIAN_FRONTEND=noninteractive
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -32,20 +33,22 @@ RUN set -eux; \
     apt-get install -y --no-install-recommends \
         git \
         nodejs \
-        php8.1 \
-        php8.1-bcmath \
-        php8.1-cli \
-        php8.1-common \
-        php8.1-curl \
-        php8.1-gd \
-        php8.1-intl \
-        php8.1-mbstring \
-        php8.1-mysql \
-        php8.1-opcache \
-        php8.1-soap \
-        php8.1-sqlite3 \
-        php8.1-xml \
-        php8.1-zip; \
+        openssh-client \
+        rsync \
+        "php${PHP_VERSION}" \
+        "php${PHP_VERSION}-bcmath" \
+        "php${PHP_VERSION}-cli" \
+        "php${PHP_VERSION}-common" \
+        "php${PHP_VERSION}-curl" \
+        "php${PHP_VERSION}-gd" \
+        "php${PHP_VERSION}-intl" \
+        "php${PHP_VERSION}-mbstring" \
+        "php${PHP_VERSION}-mysql" \
+        "php${PHP_VERSION}-opcache" \
+        "php${PHP_VERSION}-soap" \
+        "php${PHP_VERSION}-sqlite3" \
+        "php${PHP_VERSION}-xml" \
+        "php${PHP_VERSION}-zip"; \
     curl -fsSL https://getcomposer.org/installer -o /tmp/composer-setup.php; \
     php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer; \
     rm -f /tmp/composer-setup.php; \
@@ -86,5 +89,7 @@ COPY --chown=runner:runner scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod 0755 /usr/local/bin/entrypoint.sh
 
 USER runner
+
+ENV HOME=/home/runner
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
