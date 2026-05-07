@@ -38,6 +38,15 @@ docker compose build
 
 `network_mode: host` avoids Docker creating a separate network namespace. This is useful on restricted hosts where container startup fails while Docker tries to set `net.ipv4.ip_unprivileged_port_start`.
 
+If startup fails with `./config.sh: No such file or directory`, rebuild the image and clear the incomplete local runner directory:
+
+```bash
+docker compose down
+rm -rf data/actions-runner
+mkdir -p data/actions-runner data/work
+docker compose build --no-cache
+```
+
 Create a registration token in GitHub:
 
 ```text
