@@ -1,0 +1,17 @@
+services:
+  github-runner:
+    build:
+      context: .
+      args:
+        RUNNER_VERSION: latest
+    container_name: github-self-hosted-runner
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    volumes:
+      - runner-config:/home/runner/actions-runner
+      - runner-work:/home/runner/_work
+
+volumes:
+  runner-config:
+  runner-work:
