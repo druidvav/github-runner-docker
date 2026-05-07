@@ -1,0 +1,21 @@
+services:
+  github-runner:
+    build:
+      context: .
+      args:
+        RUNNER_VERSION: latest
+        PHP_VERSION: "8.1"
+    container_name: github-self-hosted-runner
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    environment:
+      PHP_VERSION: "8.1"
+      RUNNER_WORKDIR: /home/runner/_work
+    volumes:
+      - runner-config:/home/runner/actions-runner
+      - runner-work:/home/runner/_work
+
+volumes:
+  runner-config:
+  runner-work:
