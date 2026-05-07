@@ -13,7 +13,27 @@ if [[ ! -x "${runner_home}/config.sh" ]]; then
         exit 1
     fi
 
+    if [[ ! -d "${runner_seed}" || ! -x "${runner_seed}/config.sh" ]]; then
+        echo "GitHub runner seed files are missing from ${runner_seed}." >&2
+        echo "Rebuild the image and clear the incomplete local runner directory:" >&2
+        echo "  docker compose down" >&2
+        echo "  rm -rf data/actions-runner" >&2
+        echo "  mkdir -p data/actions-runner data/work" >&2
+        echo "  docker compose build --no-cache" >&2
+        exit 1
+    fi
+
     rsync -a "${runner_seed}/" "${runner_home}/"
+fi
+
+if [[ ! -x "${runner_home}/config.sh" || ! -x "${runner_home}/run.sh" ]]; then
+    echo "GitHub runner files were not initialized in ${runner_home}." >&2
+    echo "Clear the incomplete local runner directory and rebuild the image:" >&2
+    echo "  docker compose down" >&2
+    echo "  rm -rf data/actions-runner" >&2
+    echo "  mkdir -p data/actions-runner data/work" >&2
+    echo "  docker compose build --no-cache" >&2
+    exit 1
 fi
 
 cd "${runner_home}"
