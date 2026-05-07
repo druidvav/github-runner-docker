@@ -4,10 +4,13 @@ services:
       context: .
       args:
         RUNNER_VERSION: latest
+        PHP_VERSION: ${PHP_VERSION:-8.1}
     container_name: github-self-hosted-runner
     restart: unless-stopped
     stdin_open: true
     tty: true
+    environment:
+      PHP_VERSION: ${PHP_VERSION:-8.1}
     volumes:
       - runner-config:/home/runner/actions-runner
       - runner-work:/home/runner/_work
