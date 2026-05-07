@@ -1,8 +1,20 @@
 # GitHub Self-Hosted Runner
 
-Dockerized GitHub Actions self-hosted runner with Node.js 22 from NodeSource and PHP 8.1 from Sury packages.
+Dockerized GitHub Actions self-hosted runner with Node.js 22 from NodeSource, configurable PHP from Sury packages, OpenSSH client tools, and rsync.
 
 ## First Start
+
+Create an optional `.env` file for build settings:
+
+```bash
+cp .env.example .env
+```
+
+Default:
+
+```text
+PHP_VERSION=8.1
+```
 
 Build the image:
 
@@ -101,7 +113,7 @@ The entrypoint accepts these options during first registration:
 Defaults:
 
 ```text
-labels: self-hosted,linux,node22,php8.1
+labels: self-hosted,linux,node22,php8.1 when PHP_VERSION=8.1
 group: Default
 workdir: /home/runner/_work
 replace: true
