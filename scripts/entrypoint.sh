@@ -15,7 +15,6 @@ Options:
   --name NAME            Runner name. Defaults to container hostname.
   --labels LABELS        Comma-separated labels. Defaults to the image labels.
   --group GROUP          Runner group. Defaults to Default.
-  --work DIR             Work directory. Defaults to /home/runner/_work.
   --replace              Replace an existing runner with the same name. Default.
   --no-replace           Do not replace an existing runner with the same name.
   --ephemeral            Register an ephemeral one-job runner.
@@ -33,7 +32,6 @@ runner_token=""
 runner_name="$(hostname)"
 runner_labels="$(cat /etc/github-runner-default-labels)"
 runner_group="Default"
-runner_workdir="/home/runner/_work"
 runner_replace="true"
 runner_ephemeral="false"
 remove_on_exit="false"
@@ -59,10 +57,6 @@ while [[ $# -gt 0 ]]; do
             ;;
         --group)
             runner_group="${2:-}"
-            shift 2
-            ;;
-        --work)
-            runner_workdir="${2:-}"
             shift 2
             ;;
         --replace)
@@ -104,7 +98,7 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-mkdir -p "${runner_workdir}"
+mkdir -p /home/runner/_work
 
 cleanup() {
     if [[ "${remove_on_exit}" == "true" && -f .runner && -n "${runner_token}" ]]; then
@@ -156,7 +150,7 @@ if [[ ! -f .runner ]]; then
         --url "${github_url}"
         --token "${runner_token}"
         --name "${runner_name}"
-        --work "${runner_workdir}"
+        --work /home/runner/_work
         --labels "${runner_labels}"
         --runnergroup "${runner_group}"
     )
