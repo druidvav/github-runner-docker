@@ -17,9 +17,6 @@ Edit `docker-compose.yml` if needed:
 network_mode: host
 args:
   PHP_VERSION: "8.1"
-environment:
-  PHP_VERSION: "8.1"
-  RUNNER_WORKDIR: /home/runner/_work
 volumes:
   - runner-config:/home/runner/actions-runner
   - runner-work:/home/runner/_work
@@ -129,9 +126,9 @@ The entrypoint accepts these options during first registration:
 Defaults:
 
 ```text
-labels: self-hosted,linux,node22,php8.1 when PHP_VERSION=8.1
+labels: self-hosted,linux,node22
 group: Default
-workdir: RUNNER_WORKDIR or /home/runner/_work
+workdir: /home/runner/_work
 replace: true
 ```
 
