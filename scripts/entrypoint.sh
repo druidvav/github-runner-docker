@@ -13,9 +13,9 @@ Options:
   --url URL              GitHub repository or organization URL.
   --token TOKEN          GitHub runner registration token.
   --name NAME            Runner name. Defaults to container hostname.
-  --labels LABELS        Comma-separated labels. Defaults to self-hosted,linux,node22,php${PHP_VERSION}.
+  --labels LABELS        Comma-separated labels. Defaults to self-hosted,linux,node22.
   --group GROUP          Runner group. Defaults to Default.
-  --work DIR             Work directory. Defaults to RUNNER_WORKDIR or /home/runner/_work.
+  --work DIR             Work directory. Defaults to /home/runner/_work.
   --replace              Replace an existing runner with the same name. Default.
   --no-replace           Do not replace an existing runner with the same name.
   --ephemeral            Register an ephemeral one-job runner.
@@ -31,9 +31,9 @@ USAGE
 github_url=""
 runner_token=""
 runner_name="$(hostname)"
-runner_labels="self-hosted,linux,node22,php${PHP_VERSION:-8.1}"
+runner_labels="self-hosted,linux,node22"
 runner_group="Default"
-runner_workdir="${RUNNER_WORKDIR:-/home/runner/_work}"
+runner_workdir="/home/runner/_work"
 runner_replace="true"
 runner_ephemeral="false"
 remove_on_exit="false"
