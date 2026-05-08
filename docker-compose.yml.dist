@@ -12,9 +12,6 @@ services:
     network_mode: host
     stdin_open: true
     tty: true
-    environment:
-      PHP_VERSION: "8.1"
-      RUNNER_WORKDIR: /home/runner/_work
     volumes:
       - runner-config:/home/runner/actions-runner
       - runner-work:/home/runner/_work
