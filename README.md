@@ -59,7 +59,7 @@ docker compose run --rm github-runner \
   --url https://github.com/owner/repo \
   --token YOUR_REGISTRATION_TOKEN \
   --name my-server-runner \
-  --labels self-hosted,linux,node22,php8.1 \
+  --labels self-hosted,node22,php8.1 \
   --configure-only
 ```
 
@@ -126,7 +126,7 @@ The entrypoint accepts these options during first registration:
 Defaults:
 
 ```text
-labels: self-hosted,linux,node22
+labels: self-hosted,node22,php8.1 when PHP_VERSION=8.1
 group: Default
 workdir: /home/runner/_work
 replace: true
