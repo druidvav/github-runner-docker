@@ -115,7 +115,6 @@ The entrypoint accepts these options during first registration:
 --name NAME
 --labels LABELS
 --group GROUP
---work DIR
 --replace
 --no-replace
 --ephemeral
@@ -128,7 +127,6 @@ Defaults:
 ```text
 labels: self-hosted,node22,php8.1 when PHP_VERSION=8.1
 group: Default
-workdir: /home/runner/_work
 replace: true
 ```
 
