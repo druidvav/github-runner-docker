@@ -55,7 +55,7 @@ RUN set -eux; \
     curl -fsSL https://getcomposer.org/installer -o /tmp/composer-setup.php; \
     composer_version_args=(); \
     if [[ "${PHP_VERSION}" == "7.4" ]]; then \
-        composer_version_args=(--version=2.2); \
+        composer_version_args=(--2.2); \
     fi; \
     php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer "${composer_version_args[@]}"; \
     rm -f /tmp/composer-setup.php; \
