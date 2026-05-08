@@ -34,6 +34,7 @@ docker compose build
 `network_mode: host` avoids Docker creating a separate network namespace. This is useful on restricted hosts where container startup fails while Docker tries to set `net.ipv4.ip_unprivileged_port_start`.
 
 The base image is fixed to `debian:trixie-slim` because current Sury PHP packages can depend on Debian 13 libraries such as `libicu76` and `libssl3t64`.
+Composer is pinned to the 2.2 LTS line automatically when `PHP_VERSION` is `7.4`.
 
 Create a registration token in GitHub:
 
