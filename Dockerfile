@@ -64,6 +64,7 @@ RUN set -eux; \
     npm install -g grunt-cli; \
     corepack --version; \
     grunt --version; \
+    printf 'self-hosted,node22,php%s\n' "${PHP_VERSION}" > /etc/github-runner-default-labels; \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/*
 
