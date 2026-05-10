@@ -49,6 +49,8 @@ RUN set -eux; \
         "php${PHP_VERSION}-soap" \
         "php${PHP_VERSION}-sqlite3" \
         "php${PHP_VERSION}-xml" \
+        "php${PHP_VERSION}-ssh2" \
+        "php${PHP_VERSION}-pgsql" \
         "php${PHP_VERSION}-zip"; \
     phpenmod -v "${PHP_VERSION}" imagick memcached; \
     php -r '$required = ["json", "curl", "ftp", "soap", "openssl", "fileinfo", "imagick", "mbstring", "dom", "zip", "simplexml", "memcached", "libxml"]; foreach ($required as $extension) { if (!extension_loaded($extension)) { fwrite(STDERR, "Missing PHP extension: {$extension}\n"); exit(1); } }'; \
